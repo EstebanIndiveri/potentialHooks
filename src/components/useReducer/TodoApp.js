@@ -1,17 +1,48 @@
 import React, { useReducer } from 'react';
 import './TodoApp.css'
 import TodoReducer from './TodoReducer';
+import useForm from '../../hooks/useForm';
 
-const initialState=[{
-    id:new Date().getTime(),
-    desc:'Terminar proyecto React',
-    done:false
-}]
+// const initialState=[{
+//     id:new Date().getTime(),
+//     desc:'Terminar proyecto React',
+//     done:false
+// }]
+
+const init=()=>{
+    return[{
+        id:new Date().getTime(),
+        desc:'Terminar proyecto React',
+        done:false
+    }];
+}
 
 const TodoApp = () => {
 
-    const [todos, dispatch] = useReducer(TodoReducer, initialState);
-    console.log(todos);
+    const [todos, dispatch] = useReducer(TodoReducer,[],init);
+
+    const [{description},handleInputChange,reset] = useForm({
+        description:''
+    })
+
+    const handleSubmit=e=>{
+        e.preventDefault();
+        if(description.trim().length<=1){
+            return;
+        }
+        const newTodo={
+            id:new Date().getTime(),
+            desc:description,
+            done:false
+        }
+        const action={
+            type:'add',
+            payload:newTodo
+        }
+        dispatch(action);
+        reset();
+    }
+
     return ( 
         <div>
             <h1>Todo App ({todos.length})</h1>
@@ -39,6 +70,7 @@ const TodoApp = () => {
                     <h4>Agregar TODO</h4>
                     <hr/>
                     <form
+                    onSubmit={handleSubmit}
                     >
                         <input
                         type="text"
@@ -46,8 +78,11 @@ const TodoApp = () => {
                         placeholder="Comenzar"
                         autoComplete="off"
                         className="form-control"
+                        onChange={handleInputChange}
+                        value={description}
                         />
                         <button
+                        type="submit"
                         className="btn btn-outline-secondary mt-1 btn-block"
                         >
                             Agregar
