@@ -1,5 +1,4 @@
-import React from 'react';
-
+// import React from 'react';
 const TodoReducer = (state=[],action) => {
 
     switch (action.type) {
@@ -10,7 +9,7 @@ const TodoReducer = (state=[],action) => {
             return state.filter(todo=>todo.id !== action.payload);
         case 'toggle':
             return state.map(todo=>(todo.id===action.payload)?{...todo,done:!todo.done}:todo)
-            
+
         case 'toggle-old':
             return state.map(todo=>{
                 if(todo.id === action.payload){
