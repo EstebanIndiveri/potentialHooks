@@ -1,30 +1,33 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import './TodoApp.css'
 import TodoReducer from './TodoReducer';
 import useForm from '../../hooks/useForm';
 
-// const initialState=[{
-//     id:new Date().getTime(),
-//     desc:'Terminar proyecto React',
-//     done:false
-// }]
-
 const init=()=>{
-    return[{
-        id:new Date().getTime(),
-        desc:'Terminar proyecto React',
-        done:false
-    }];
+    return JSON.parse(localStorage.getItem('todos')) || [];
+    // return[{
+    //     id:new Date().getTime(),
+    //     desc:'Terminar proyecto React',
+    //     done:false
+    // }];
 }
 
 const TodoApp = () => {
-
     const [todos, dispatch] = useReducer(TodoReducer,[],init);
-
     const [{description},handleInputChange,reset] = useForm({
         description:''
     })
 
+    useEffect(()=>{
+        localStorage.setItem('todos',JSON.stringify(todos));
+    },[todos])
+    const handleDelete=(id)=>{
+        const action={
+            type:'delete',
+            payload:id
+        }
+        dispatch(action);
+    }
     const handleSubmit=e=>{
         e.preventDefault();
         if(description.trim().length<=1){
@@ -59,6 +62,7 @@ const TodoApp = () => {
                                 <p className="text-center">{index + 1 }- {todo.desc}</p>
                                 <button
                                 className="btn btn-danger"
+                                onClick={()=>handleDelete(todo.id)}
                                 >
                                     Borrar
                                 </button>
