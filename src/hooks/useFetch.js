@@ -26,6 +26,12 @@ const useFetch = (url) => {
                 })
             }
           
+        }).catch(()=>{
+            setState({
+                data:null,
+                loading:false,
+                error:'no se pudo cargar info'
+            })
         })
     },[url])
 
