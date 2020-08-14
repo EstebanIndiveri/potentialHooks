@@ -1,25 +1,24 @@
-import React from 'react'
+import React,{useContext} from 'react'
+import { UserContext } from './UserContext';
 
 const LoginScreen = () => {
 
-    //1.referenia al context
-    //2.setuser
-    //3.
-/*
-{
-    id,
-    name
-}
-*/
+
+    const {setUser} = useContext(UserContext);
+
+  
     return ( 
         <div>
             <h1>LoginScreen</h1>
             <hr/>
             <button 
             className="btn btn-secondary"
-            // onClick={()=>serUser()}
+            onClick={()=>setUser({
+                id:123,
+                name:"algo"
+            })}
             >
-
+                Login
             </button>
         </div>
      );
