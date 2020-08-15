@@ -35,7 +35,20 @@ describe('<TodoListItem/>', () => {
         //p content
         const p=wrapper.find('p');
         expect(p.text().trim()).toBe(`${demoTodos[0].id + 1 }- ${demoTodos[0].desc}`)
+    });
+
+    test('debe tener clase complete si todo.done=true', () => {
+        const todo=demoTodos[0];
+        todo.done=true
+        const wrapper=shallow(<TodoListItem 
+            todo={todo} 
+            index={todo.id} 
+            handleDelete={handleDelete} 
+            handleToggle={handleToggle}
+            />)
+            expect(wrapper.find('p').hasClass('complete')).toBe(true);
     })
+    
     
 
 })
