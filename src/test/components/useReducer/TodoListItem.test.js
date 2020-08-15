@@ -21,14 +21,20 @@ describe('<TodoListItem/>', () => {
     test('llama function handleDelete', () => {
         //jest.fn();
         //havebeencalledwith
+        wrapper.find('button').simulate('click');
+        expect(handleDelete).toHaveBeenCalledWith(demoTodos[0].id);
     });
 
     test('llama functon handleToggle', () => {
         //jest.fn()
         //havebeencalledwith
+        wrapper.find('p').simulate('click');
+        expect(handleToggle).toHaveBeenCalledWith(demoTodos[0].id);
     });
-    test('mostrar el testo correctamente', () => {
+    test('mostrar el texto correctamente', () => {
         //p content
+        const p=wrapper.find('p');
+        expect(p.text().trim()).toBe(`${demoTodos[0].id + 1 }- ${demoTodos[0].desc}`)
     })
     
 
