@@ -9,49 +9,75 @@ const init=()=>{
 }
 
 const TodoApp = () => {
-    const [todos, dispatch] = useReducer(TodoReducer,[],init);
-    useEffect(()=>{
-        localStorage.setItem('todos',JSON.stringify(todos));
-    },[todos])
 
-    const handleDelete=(id)=>{
-        const action={
-            type:'delete',
-            payload:id
+    const [ todos, dispatch ] = useReducer(TodoReducer, [], init);
+    
+    useEffect( ()=> {
+        localStorage.setItem('todos', JSON.stringify( todos ) );
+    }, [todos]);
+
+
+    const handleDelete = ( todoId ) => {
+
+        const action = {
+            type: 'delete',
+            payload: todoId
         }
-        dispatch(action);
-    }
-    const handleToggle=(todoId)=>{
-        dispatch({
-            type:'toggle',
-            payload:todoId
-        })
+
+        dispatch( action );
     }
 
-    const handleAddTodo=(newTodo)=>{
+    const handleToggle = ( todoId ) =>{
+        
         dispatch({
-            type:'add',
-            payload:newTodo
+            type: 'toggle',
+            payload: todoId
         });
+
     }
 
-    return ( 
+    const handleAddTodo = ( newTodo ) => {
+        
+        dispatch({
+            type: 'add',
+            payload: newTodo
+        });
+
+    }
+
+
+    return (
         <div>
-            <h1>Todo App ({todos.length})</h1>
-            <hr/>
+            <h1>TodoApp ( { todos.length } ) </h1>
+            <hr />
+
             <div className="row">
+
                 <div className="col-7">
-                    <TodoList todos={todos} handleDelete={handleDelete} handleToggle={handleToggle}/>
+
+                    <TodoList 
+                        todos={ todos }
+                        handleDelete={ handleDelete }
+                        handleToggle={ handleToggle }
+                    />
+
                 </div>
+
+
                 <div className="col-5">
-                  <TodoAdd
-                  handleAddTodo={handleAddTodo}
-                  />
+                    
+                    <TodoAdd 
+                        handleAddTodo={ handleAddTodo }
+                    />
+                    
+
                 </div>
+
+
             </div>
-       
+
         </div>
-     );
+    )
 }
  
 export default TodoApp;

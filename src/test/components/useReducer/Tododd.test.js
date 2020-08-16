@@ -36,11 +36,7 @@ import '@testing-library/jest-dom';
                 desc:value,
                 done:false,
             }); 
-
-
-
-        })
-        
-        
+            expect(wrapper.find('input').prop('value')).toBe('');
+        });
     })
     
